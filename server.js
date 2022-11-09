@@ -1,6 +1,6 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
-const Connection = require('mysql2/typings/mysql/lib/Connection');
+//const Connection = require('mysql2/typings/mysql/lib/Connection');
 require('dotenv').config();
 
 const sqlConnection = mysql.createConnection({ 
@@ -8,10 +8,10 @@ const sqlConnection = mysql.createConnection({
     user: 'root',
     password: process.env.DB_PASSWORD,
     database: 'employees_db',
-    port: 3001
+    port: 3306
 });
 
-connection.connect((err) => {
+sqlConnection.connect((err) => {
     if (err) throw err;
     questions();
 });
@@ -165,7 +165,7 @@ function updateEmployees(){
 function viewRoles(){
     const sql =
     `SELECT role.id,
-    employee.role,
+    role.title,
     department.dept_name AS department,
     employee.salaryFROM role LEFT JOIN department ON role.department_id = department.id`;
 
@@ -192,10 +192,10 @@ function addRoles(){
     .then((answers) => {
         const sql =
         `SELECT role.id,
-        employee.role,
-        employee.salary`;
+        role.title,
+        role.salary`;
 
-        sqlConnection.query("INSERT INTO employee (title,salary) VALUES (?,?)", 
+        sqlConnection.query("INSERT INTO role (title,salary) VALUES (?,?)", 
         [answers.role, answers.roleSalary], (err, answers) => {
             console.table(answers);
             if (err) throw err;
