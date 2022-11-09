@@ -62,7 +62,7 @@ function viewEmployees(){
     employee.last_name,
     role.title,
     role.salary,
-    department.department_name AS department,
+    department.department_name AS department
     FROM employee
     LEFT JOIN role ON employee.role_id = role.id
     LEFT JOIN department ON role.department_id = department.id

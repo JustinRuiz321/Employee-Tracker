@@ -11,12 +11,12 @@ CREATE TABLE role (
     FOREIGN KEY (department_id)
     REFERENCES department(id)
     ON DELETE SET NULL
-)
+);
 
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     dept_name VARCHAR(20) NOT NULL
-)
+);
 
 CREATE TABLE employee (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -30,4 +30,4 @@ CREATE TABLE employee (
     FOREIGN KEY (role_id)
     REFERENCES role(id)
     ON DELETE SET NULL
-)
+);
