@@ -60,8 +60,8 @@ function viewEmployees(){
     employee.id,
     employee.first_name,
     employee.last_name,
-    employee.role,
-    employee.salary,
+    role.title,
+    role.salary,
     department.department_name AS department,
     FROM employee
     LEFT JOIN role ON employee.role_id = role.id
@@ -119,7 +119,7 @@ function updateEmployees(){
 
     const employeeRole =
     `SELECT role.id,
-    employee.role
+    role.title
     FROM role`;
 
     sqlConnection.query(sql, (err , rows) => {
