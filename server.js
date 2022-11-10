@@ -88,20 +88,22 @@ function addEmployees(){
             message: 'Please enter the last name of the employee being added'
         },
         {
-            type: 'list',
+            type: 'input',
             name: 'role',
             message: "What's the employee's role?"
         },
         {
-            type: 'list',
+            type: 'input',
             name: 'manager',
             message: "Who is the employee's manager?"
         }
     ])
     .then((answers) => {
+        var role_id = parseInt(answers.role);
+        var manager_id = parseInt(answers.manager);
         sqlConnection.query(
             `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`,
-            [answers.first_name, answers.last_name, answers.role,, answers.manager], (err , answers) => {
+            [answers.first_name, answers.last_name, role_id, manager_id], (err , answers) => {
                 console.table(answers);
                 if (err) throw err;
                 questions();
