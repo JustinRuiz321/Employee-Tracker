@@ -178,8 +178,8 @@ function viewRoles(){
     const sql =
     `SELECT role.id,
     role.title,
-    department.dept_name AS department,
-    employee.salaryFROM role LEFT JOIN department ON role.department_id = department.id`;
+    department.department_name AS department,
+    role.salary FROM role LEFT JOIN department ON role.department_id = department.id`;
 
     sqlConnection.query(sql, (err, rows) => {
         console.table(rows);
@@ -219,7 +219,7 @@ function addRoles(){
 function viewDepartments(){
     const sql =
     `SELECT department.id,
-    department.dept_name AS department FROM department`;
+    department.department_name AS department FROM department`;
 
     sqlConnection.query(sql, (err, rows) => {
         console.table(rows);
@@ -235,15 +235,15 @@ function addDepartments(){
             name: 'department',
             message: "Name the department being added"
         }
+    ])
         .then(answers => {
-            sqlConnection.query("INSERT INTO department (dept_name) VALUES (?)",
+            sqlConnection.query("INSERT INTO department (department_name) VALUES (?)",
             [answers.departments], (err,answers) =>{
                 console.table(answers);
                 if (err) throw err;
                 questions();
             });
-        })
-    ]);
+        });
 };
 
 function finished(){
