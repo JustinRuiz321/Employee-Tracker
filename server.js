@@ -45,9 +45,6 @@ function questions(){
         if (openingQuestions === 'View different departments') {
             viewDepartments();
         };
-        if (openingQuestions === 'Add another department') {
-            addDepartments();
-        };
         if (openingQuestions === 'Finished') {
             finished();
         };
@@ -136,13 +133,13 @@ function updateEmployees(){
 
     sqlConnection.query(sql, (err , rows) => {
         var array = []
+        var arrayRole = []
         rows.forEach((tacocat, i) => {
             array.push(`${tacocat.first_name} ${tacocat.last_name}`)
         });
         if (err) throw err ;
 
         sqlConnection.query(employeeRole, (err, rows) => {
-            var arrayRole = []
             rows.forEach((mousetrap, i) => {
                 arrayRole.push(`${mousetrap.title}`)
             })
@@ -162,6 +159,7 @@ function updateEmployees(){
                 message: 'Assign the new ID to the employee.',
                 choices: arrayRole
             }
+        ])
             .then((answers) => {
                 sqlConnection.query("UPDATE employee SET role_id = ? WHERE id = ?" ,
                 [answers.employee, answers.employeeRole], (err, answers) => {
@@ -169,8 +167,7 @@ function updateEmployees(){
                     if (err) throw err;
                     questions();
                 });
-            })
-        ]);
+            });
     });
 };
 
@@ -228,23 +225,6 @@ function viewDepartments(){
     });
 };
 
-function addDepartments(){
-    inquirer.prompt([
-        {
-            type: 'input' ,
-            name: 'department',
-            message: "Name the department being added"
-        }
-    ])
-        .then(answers => {
-            sqlConnection.query("INSERT INTO department (department_name) VALUES (?)",
-            [answers.departments], (err,answers) =>{
-                console.table(answers);
-                if (err) throw err;
-                questions();
-            });
-        });
-};
 
 function finished(){
     console.log("Goodbye!");
