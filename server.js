@@ -99,8 +99,18 @@ function addEmployees(){
         }
     ])
     .then((answers) => {
-        var role_id = parseInt(answers.role);
-        var manager_id = parseInt(answers.manager);
+        var role_id;
+        var manager_id;
+        if (answers.role === "null") {
+            role_id = null
+        } else {
+            role_id = parseInt(answers.role)
+        }
+        if (answers.manager == "null") {
+            manager_id = null
+        } else {
+            manager_id = parseInt(answers.manager)
+        }
         sqlConnection.query(
             `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`,
             [answers.first_name, answers.last_name, role_id, manager_id], (err , answers) => {
